@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Тест 2. Перевод и понятия</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; padding: 0 15px; background: #f7f7f7; }
+  h1 { font-size: 1.4em; }
+  .q { background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; }
+  .q p { margin: 0 0 8px; font-weight: bold; }
+  label { display: block; margin: 4px 0; cursor: pointer; }
+  button { padding: 10px 20px; font-size: 1em; border: none; border-radius: 6px; background: #2c6fbb; color: #fff; cursor: pointer; }
+  button:disabled { background: #999; cursor: not-allowed; }
+  #result { margin-top: 16px; font-size: 1.1em; font-weight: bold; }
+  .correct { color: #1a7f37; }
+  .wrong { color: #c62828; }
+</style>
+</head>
+<body>
+<h1>Тест 2. Перевод и понятия</h1>
+<p>Выберите один вариант ответа в каждом вопросе. Попытка одна.</p>
+
+<form id="quiz">
+  <div class="q">
+    <p>1. Обрабатывать</p>
+    <label><input type="radio" name="q1" value="A"> A. To access</label>
+    <label><input type="radio" name="q1" value="B"> B. To process</label>
+    <label><input type="radio" name="q1" value="C"> C. To display</label>
+  </div>
+
+  <div class="q">
+    <p>2. Применение</p>
+    <label><input type="radio" name="q2" value="A"> A. Resolution</label>
+    <label><input type="radio" name="q2" value="B"> B. Application</label>
+    <label><input type="radio" name="q2" value="C"> C. Amount</label>
+  </div>
+
+  <div class="q">
+    <p>3. Символ</p>
+    <label><input type="radio" name="q3" value="A"> A. Character</label>
+    <label><input type="radio" name="q3" value="B"> B. Figure</label>
+    <label><input type="radio" name="q3" value="C"> C. Letter</label>
+  </div>
+
+  <div class="q">
+    <p>4. Source</p>
+    <label><input type="radio" name="q4" value="A"> A. источник</label>
+    <label><input type="radio" name="q4" value="B"> B. получатель</label>
+    <label><input type="radio" name="q4" value="C"> C. инструменты</label>
+  </div>
+
+  <div class="q">
+    <p>5. Ссылаться</p>
+    <label><input type="radio" name="q5" value="A"> A. To refer</label>
+    <label><input type="radio" name="q5" value="B"> B. To display</label>
+    <label><input type="radio" name="q5" value="C"> C. To plug</label>
+  </div>
+
+  <div class="q">
+    <p>6. Совместимый</p>
+    <label><input type="radio" name="q6" value="A"> A. Convenient</label>
+    <label><input type="radio" name="q6" value="B"> B. Suitable</label>
+    <label><input type="radio" name="q6" value="C"> C. Compatible</label>
+  </div>
+
+  <div class="q">
+    <p>7. Can't create directory</p>
+    <label><input type="radio" name="q7" value="A"> A. Требуется идентификатор переменной</label>
+    <label><input type="radio" name="q7" value="B"> B. Невозможно создать каталог</label>
+    <label><input type="radio" name="q7" value="C"> C. Ожидание соединения</label>
+  </div>
+
+  <div class="q">
+    <p>8. Close commander link</p>
+    <label><input type="radio" name="q8" value="A"> A. Создать системный диск</label>
+    <label><input type="radio" name="q8" value="B"> B. Прервать сеанс связи</label>
+    <label><input type="radio" name="q8" value="C"> C. Создать каталог</label>
+  </div>
+
+  <div class="q">
+    <p>9. Device write fault</p>
+    <label><input type="radio" name="q9" value="A"> A. Сбой аппаратных средств</label>
+    <label><input type="radio" name="q9" value="B"> B. Невозможно создать каталог</label>
+    <label><input type="radio" name="q9" value="C"> C. Неисправное устройство чтения</label>
+  </div>
+
+  <div class="q">
+    <p>10. Variable identifier expected</p>
+    <label><input type="radio" name="q10" value="A"> A. Слишком много открытых файлов</label>
+    <label><input type="radio" name="q10" value="B"> B. Требуется идентификатор переменной</label>
+    <label><input type="radio" name="q10" value="C"> C. Неправильная директива компилятора</label>
+  </div>
+
+  <button type="button" id="finishBtn">Завершить тест</button>
+</form>
+<div id="result"></div>
+
+<script>
+(function(){
+  const answers = {
+    q1: "B", q2: "B", q3: "A", q4: "A", q5: "A",
+    q6: "C", q7: "B", q8: "B", q9: "C", q10: "B"
+  };
+  let finished = false;
+
+  document.getElementById("finishBtn").addEventListener("click", function(){
+    if (finished) return;
+    finished = true;
+    this.disabled = true;
+
+    let score = 0;
+    const form = document.getElementById("quiz");
+    form.querySelectorAll("input[type=radio]").forEach(i => i.disabled = true);
+
+    for (let key in answers) {
+      const chosen = form.querySelector(`input[name="${key}"]:checked`);
+      const qDiv = form.querySelector(`input[name="${key}"]`).closest(".q");
+      if (chosen && chosen.value === answers[key]) {
+        score++;
+        qDiv.style.borderColor = "#1a7f37";
+        qDiv.style.background = "#e8f5e9";
+      } else {
+        qDiv.style.borderColor = "#c62828";
+        qDiv.style.background = "#ffebee";
+      }
+    }
+
+    const res = document.getElementById("result");
+    res.textContent = `Результат: ${score} из 10 правильных ответов.`;
+    res.className = score >= 6 ? "correct" : "wrong";
+  });
+})();
+</script>
+</body>
+</html>
